@@ -18,9 +18,10 @@ public class Bulb : MonoBehaviour {
     DateTime healthEpoch;
     // The UI elements which show the stats %
     Slider hungerSlider, happinessSlider, healthSlider;
+    Text hungerText, happinessText, healthText;
 
     // Use this for initialization
-    void Start () {
+    void Start() {
         // Attempts to load the stats when started
         LoadStats();
 
@@ -30,17 +31,24 @@ public class Bulb : MonoBehaviour {
         healthSlider = GameObject.Find("HealthBar").GetComponent<Slider>();
         // Sets the max values just in case
         hungerSlider.maxValue = happinessSlider.maxValue = healthSlider.maxValue = 100;
-	}
-	
-	// Update is called once per frame
-	void Update () {
+        hungerText = GameObject.Find("HungerText").GetComponent<Text>();
+        happinessText = GameObject.Find("HappinessText").GetComponent<Text>();
+        healthText = GameObject.Find("HealthText").GetComponent<Text>();
+    }
+
+    // Update is called once per frame
+    void Update() {
         StatUpdate();
-	}
+
+        hungerText.text = "" + RoundStat(hunger + huOff);
+        happinessText.text = "" + RoundStat(happiness + haOff);
+        healthText.text = "" + RoundStat(health + heOff);
+    }
 
     // Called every time the game is paused or unpaused
     void OnApplicationPause(bool pause)
     {
-        if(pause)
+        if (pause)
             SaveStats();
     }
     // Called right before the program quits
@@ -52,34 +60,100 @@ public class Bulb : MonoBehaviour {
     // Calculates the stats with some math
     void StatUpdate()
     {
-        //Defines difference since the hunger epoch
-        TimeSpan timeSpan = DateTime.UtcNow - hungerEpoch;
+        //Defines difference since the health epoch
+        TimeSpan timeSpan = DateTime.UtcNow - healthEpoch;
         //Total seconds since that epoch
         double s = timeSpan.TotalSeconds;
-        //Calculation for hunger
-        hunger = -1 * (s / 792) + 100;
+        //Calculation for health
+        health = -1 * (s / 792) + 100;
 
         //Same for happiness
         timeSpan = DateTime.UtcNow - happinessEpoch;
         s = timeSpan.TotalSeconds;
         happiness = -1 * (100 * Mathf.Pow((float)s, 2) / Mathf.Pow(72000, 2)) + 100;
 
-        //Same for health
-        timeSpan = DateTime.UtcNow - healthEpoch;
+        //Same for hunger
+        timeSpan = DateTime.UtcNow - hungerEpoch;
         s = timeSpan.TotalSeconds;
-        health = -1 * (100 / Mathf.Sqrt(86400)) * Mathf.Sqrt((float)s) + 100;
-
-        //Adds any offsets from not fully restored stats
-        hunger += huOff;
-        happiness += haOff;
-        health += heOff;
+        hunger = -1 * (100 / Mathf.Sqrt(86400)) * Mathf.Sqrt((float)s) + 100;
 
         //Sets the GUI to show the stats
-        hungerSlider.value = (float)hunger;
-        happinessSlider.value = (float)happiness;
-        healthSlider.value = (float)health;
+        hungerSlider.value = (float)(hunger + huOff);
+        happinessSlider.value = (float)(happiness + haOff);
+        healthSlider.value = (float)(health + heOff);
     }
 
+    float RoundStat(double s)
+    {
+        float o = (float)s;
+        o *= 100;
+        o = Mathf.RoundToInt(o);
+        o /= 100;
+        return o;
+    }
+
+    public void Feed(double val)
+    {
+        huOff += val;
+        if (hunger + huOff >= 100)
+        {
+            hunger = 100;
+            huOff = 0;
+            hungerEpoch = DateTime.UtcNow;
+        }
+    }
+    public void Feed()
+    {
+        huOff += 10;
+        if (hunger + huOff >= 100)
+        {
+            hunger = 100;
+            huOff = 0;
+            hungerEpoch = DateTime.UtcNow;
+        }
+    }
+    public void Play(double val)
+    {
+        haOff += val;
+        if(happiness + haOff >= 100)
+        {
+            happiness = 100;
+            haOff = 0;
+            happinessEpoch = DateTime.UtcNow;
+        }
+    }
+    public void Play()
+    {
+        haOff += 10;
+        if (happiness + haOff >= 100)
+        {
+            happiness = 100;
+            haOff = 0;
+            happinessEpoch = DateTime.UtcNow;
+        }
+    }
+    public void Treat(double val)
+    {
+        heOff += val;
+        if(health + heOff >= 100)
+        {
+            health = 100;
+            heOff = 0;
+            healthEpoch = DateTime.UtcNow;
+        }
+    }
+    public void Treat()
+    {
+        heOff += 10;
+        if (health + heOff >= 100)
+        {
+            health = 100;
+            heOff = 0;
+            healthEpoch = DateTime.UtcNow;
+        }
+    }
+
+    // Save load stuff
     void SaveStats()
     {
         // The file path at which the game saves
