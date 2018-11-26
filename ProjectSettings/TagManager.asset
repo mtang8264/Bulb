@@ -42,3 +42,12 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Background
+    uniqueID: 1085649317
+    locked: 0
+  - name: Sprites
+    uniqueID: 3044652575
+    locked: 0
+  - name: Overlay
+    uniqueID: 4107946419
+    locked: 0
