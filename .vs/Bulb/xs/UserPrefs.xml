@@ -1,14 +1,13 @@
 ﻿<Properties StartupConfiguration="{BBA2227D-8394-2CB3-8519-62FA0217A641}|">
   <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="Unity.Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/ScreenTest.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Bulb.cs">
     <Files>
-      <File FileName="Assets/Scripts/Bulb.cs" Line="78" Column="39" />
-      <File FileName="Assets/Scripts/Selection.cs" Line="64" Column="22" />
+      <File FileName="Assets/Scripts/Bulb.cs" Line="245" Column="17" />
+      <File FileName="Assets/Scripts/Selection.cs" Line="1" Column="1" />
       <File FileName="Assets/Scripts/Spawner.cs" Line="16" Column="77" />
       <File FileName="Assets/Scripts/StatButtons.cs" Line="7" Column="21" />
       <File FileName="Assets/Scripts/BulbWander.cs" Line="23" Column="46" />
-      <File FileName="Assets/Scripts/EndScreen.cs" Line="39" Column="92" />
-      <File FileName="Assets/Scripts/ScreenTest.cs" Line="33" Column="7" />
+      <File FileName="Assets/Scripts/EndScreen.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
