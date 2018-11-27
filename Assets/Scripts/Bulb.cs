@@ -8,17 +8,38 @@ using System.Runtime.Serialization;
 using System.IO;
 
 public class Bulb : MonoBehaviour {
+    public string az = "0 = Linear, 1 = DropOff, 2 = LevelOut";
+    public int hungerBehavior, happinessBehavior, healthBehavior;
+
     // The stats after they have been processed
-    public double hunger, happiness, health;
+    double hunger, happiness, health;
     // Any offsets which may occur;
-    public double huOff, haOff, heOff;
+    double huOff, haOff, heOff;
     // These are the last times these stats were filled
     DateTime hungerEpoch;
     DateTime happinessEpoch;
     DateTime healthEpoch;
     // The UI elements which show the stats %
     Slider hungerSlider, happinessSlider, healthSlider;
-    Text hungerText, happinessText, healthText;
+    Text status;
+
+    Button feed, play, treat;
+
+    string[] goodStatuses = {
+        "\nSTUFFED",
+        "\nECSTATIC",
+        "\nFULL OF ENERGY"
+    };
+    string[] mediumStatuses = {
+        "\nFULL",
+        "\nCONTENT",
+        "\nHEALTHY"
+    };
+    string[] badStatuses = {
+        "\nLETHARGIC",
+        "\nJITTERY",
+        "\nALIVE"
+    };
 
     // Use this for initialization
     void Start() {
@@ -31,18 +52,42 @@ public class Bulb : MonoBehaviour {
         healthSlider = GameObject.Find("HealthBar").GetComponent<Slider>();
         // Sets the max values just in case
         hungerSlider.maxValue = happinessSlider.maxValue = healthSlider.maxValue = 100;
-        hungerText = GameObject.Find("HungerText").GetComponent<Text>();
-        happinessText = GameObject.Find("HappinessText").GetComponent<Text>();
-        healthText = GameObject.Find("HealthText").GetComponent<Text>();
+
+        status = GameObject.Find("Status").GetComponent<Text>();
+
+        feed = GameObject.Find("Feed").GetComponent<Button>();
+        feed.onClick.AddListener(Feed);
+        play = GameObject.Find("Play").GetComponent<Button>();
+        play.onClick.AddListener(Play);
+        treat = GameObject.Find("Treat").GetComponent<Button>();
+        treat.onClick.AddListener(Treat);
     }
 
     // Update is called once per frame
     void Update() {
         StatUpdate();
 
-        hungerText.text = "" + RoundStat(hunger + huOff);
-        happinessText.text = "" + RoundStat(happiness + haOff);
-        healthText.text = "" + RoundStat(health + heOff);
+        double[] st = { hunger + huOff, happiness + haOff, health + heOff };
+        double avg = (st[0] + st[1] + st[2]) / 3;
+        int idxMax = 0;
+        for (int i = 0; i < 3; i ++)
+        {
+            if (st[i] > st[idxMax])
+                idxMax = i;
+        }
+        status.text = gameObject.name + " IS FEELING";
+        if(avg > 66)
+        {
+            status.text += goodStatuses[idxMax];
+        }
+        else if(avg >33)
+        {
+            status.text += mediumStatuses[idxMax];
+        }
+        else
+        {
+            status.text += badStatuses[idxMax];
+        }
     }
 
     // Called every time the game is paused or unpaused
@@ -64,18 +109,50 @@ public class Bulb : MonoBehaviour {
         TimeSpan timeSpan = DateTime.UtcNow - healthEpoch;
         //Total seconds since that epoch
         double s = timeSpan.TotalSeconds;
-        //Calculation for health
-        health = -1 * (s / 792) + 100;
+        switch (healthBehavior)
+        {
+            case 0:
+                health = Linear(s);
+                break;
+            case 1:
+                health = DropOff(s);
+                break;
+            case 2:
+                health = LevelOut(s);
+                break;
+        }
 
         //Same for happiness
         timeSpan = DateTime.UtcNow - happinessEpoch;
         s = timeSpan.TotalSeconds;
-        happiness = -1 * (100 * Mathf.Pow((float)s, 2) / Mathf.Pow(72000, 2)) + 100;
+        switch(happinessBehavior)
+        {
+            case 0:
+                happiness = Linear(s);
+                break;
+            case 1:
+                happiness = DropOff(s);
+                break;
+            case 2:
+                happiness = LevelOut(s);
+                break;
+        }
 
         //Same for hunger
         timeSpan = DateTime.UtcNow - hungerEpoch;
         s = timeSpan.TotalSeconds;
-        hunger = -1 * (100 / Mathf.Sqrt(86400)) * Mathf.Sqrt((float)s) + 100;
+        switch(healthBehavior)
+        {
+            case 0:
+                health = Linear(s);
+                break;
+            case 1:
+                health = DropOff(s);
+                break;
+            case 2:
+                health = LevelOut(s);
+                break;
+        }
 
         //Sets the GUI to show the stats
         hungerSlider.value = (float)(hunger + huOff);
@@ -94,6 +171,7 @@ public class Bulb : MonoBehaviour {
 
     public void Feed(double val)
     {
+        Debug.Log("fed" + Time.time);
         huOff += val;
         if (hunger + huOff >= 100)
         {
@@ -104,6 +182,7 @@ public class Bulb : MonoBehaviour {
     }
     public void Feed()
     {
+        Debug.Log("fed" + Time.time);
         huOff += 10;
         if (hunger + huOff >= 100)
         {
@@ -114,6 +193,7 @@ public class Bulb : MonoBehaviour {
     }
     public void Play(double val)
     {
+        Debug.Log("played" + Time.time);
         haOff += val;
         if(happiness + haOff >= 100)
         {
@@ -124,6 +204,7 @@ public class Bulb : MonoBehaviour {
     }
     public void Play()
     {
+        Debug.Log("played" + Time.time);
         haOff += 10;
         if (happiness + haOff >= 100)
         {
@@ -134,6 +215,7 @@ public class Bulb : MonoBehaviour {
     }
     public void Treat(double val)
     {
+        Debug.Log("treated" + Time.time);
         heOff += val;
         if(health + heOff >= 100)
         {
@@ -144,6 +226,7 @@ public class Bulb : MonoBehaviour {
     }
     public void Treat()
     {
+        Debug.Log("treated" + Time.time);
         heOff += 10;
         if (health + heOff >= 100)
         {
@@ -151,6 +234,19 @@ public class Bulb : MonoBehaviour {
             heOff = 0;
             healthEpoch = DateTime.UtcNow;
         }
+    }
+
+    double Linear(double s)
+    {
+        return -1 * (s / 720) + 100;
+    }
+    double LevelOut(double s)
+    {
+        return -1 * (100 / Mathf.Sqrt(86400)) * Mathf.Sqrt((float)s) + 100;
+    }
+    double DropOff(double s)
+    {
+        return -1 * (100 * Mathf.Pow((float)s, 2) / Mathf.Pow(79200, 2)) + 100;
     }
 
     // Save load stuff

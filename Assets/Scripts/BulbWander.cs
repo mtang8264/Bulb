@@ -20,6 +20,8 @@ public class BulbWander : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        animator.SetBool("walking", walking);
+
         if (!walking && lastWalk + 2.5 < Time.time)
         {
             if (Random.value > .5)

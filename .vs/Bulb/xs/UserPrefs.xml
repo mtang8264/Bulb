@@ -1,0 +1,18 @@
+﻿<Properties StartupConfiguration="{BBA2227D-8394-2CB3-8519-62FA0217A641}|">
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="Unity.Editor" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/BulbWander.cs">
+    <Files>
+      <File FileName="Assets/Scripts/Bulb.cs" Line="218" Column="40" />
+      <File FileName="Assets/Scripts/Selection.cs" Line="61" Column="31" />
+      <File FileName="Assets/Scripts/Spawner.cs" Line="16" Column="77" />
+      <File FileName="Assets/Scripts/StatButtons.cs" Line="7" Column="21" />
+      <File FileName="Assets/Scripts/BulbWander.cs" Line="22" Column="18" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MultiItemStartupConfigurations />
+</Properties>
