@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Runtime.Serialization;
 using System.IO;
+using UnityEngine.SceneManagement;
 
 public class Bulb : MonoBehaviour {
     public string az = "0 = Linear, 1 = DropOff, 2 = LevelOut";
@@ -66,6 +67,16 @@ public class Bulb : MonoBehaviour {
     // Update is called once per frame
     void Update() {
         StatUpdate();
+
+        if(hunger + huOff <= 0 || happiness + haOff <= 0 || health + heOff <= 0)
+        {
+            BinaryFormatter bf = new BinaryFormatter();
+            FileStream file = File.Create(Application.persistentDataPath + "/end.blb");
+            bf.Serialize(file, DateTime.UtcNow);
+            file.Close();
+
+            SceneManager.LoadScene(2);
+        }
 
         double[] st = { hunger + huOff, happiness + haOff, health + heOff };
         double avg = (st[0] + st[1] + st[2]) / 3;
