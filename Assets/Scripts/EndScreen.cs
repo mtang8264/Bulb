@@ -25,10 +25,10 @@ public class EndScreen : MonoBehaviour {
             f.Close();
         }
         s = File.Open(Application.persistentDataPath + "/start.blb", FileMode.Open) ?? null;
-        e = File.Open(Application.persistentDataPath + "/end.blb", FileMode.Open) ?? null;
         sTime = (DateTime)bf.Deserialize(s);
-        eTime = (DateTime)bf.Deserialize(e);
         s.Close();
+        e = File.Open(Application.persistentDataPath + "/end.blb", FileMode.Open) ?? null;
+        eTime = (DateTime)bf.Deserialize(e);
         e.Close();
 
         TimeSpan span = eTime - sTime;
@@ -37,10 +37,5 @@ public class EndScreen : MonoBehaviour {
             (span.Hours - span.Days * 24) + " Hours,\n" +
             (span.Minutes - (span.Hours - span.Days * 24) * 60) + " Minutes, and\n" +
             (span.Seconds - (span.Minutes - (span.Hours - span.Days * 24) * 60) * 60) + " Seconds";
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
 	}
 }

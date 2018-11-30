@@ -44,6 +44,11 @@ public class Bulb : MonoBehaviour {
 
     // Use this for initialization
     void Start() {
+        if (File.Exists(Application.persistentDataPath + "/pet.blb") == false)
+        {
+            SceneManager.LoadScene(1);
+        }
+
         // Attempts to load the stats when started
         LoadStats();
 
@@ -65,7 +70,7 @@ public class Bulb : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update() {
+    void LateUpdate() {
         StatUpdate();
 
         if(hunger + huOff <= 0 || happiness + haOff <= 0 || health + heOff <= 0)
