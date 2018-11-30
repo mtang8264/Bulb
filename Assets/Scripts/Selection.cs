@@ -6,6 +6,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 using System.Runtime.Serialization;
 using UnityEngine.SceneManagement;
+using System;
 
 public class Selection : MonoBehaviour {
     int curr = 0;
@@ -57,6 +58,9 @@ public class Selection : MonoBehaviour {
         BinaryFormatter bf = new BinaryFormatter();
         FileStream file = File.Create(Application.persistentDataPath + "/pet.blb");
         bf.Serialize(file, curr);
+        file.Close();
+        file = File.Create(Application.persistentDataPath + "/start.blb");
+        bf.Serialize(file, DateTime.UtcNow);
         file.Close();
         SceneManager.LoadScene(0);
     }

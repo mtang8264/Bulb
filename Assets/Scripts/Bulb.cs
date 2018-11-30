@@ -6,15 +6,16 @@ using UnityEngine.UI;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Runtime.Serialization;
 using System.IO;
+using UnityEngine.SceneManagement;
 
 public class Bulb : MonoBehaviour {
     public string az = "0 = Linear, 1 = DropOff, 2 = LevelOut";
     public int hungerBehavior, happinessBehavior, healthBehavior;
 
     // The stats after they have been processed
-    double hunger, happiness, health;
+    public double hunger, happiness, health;
     // Any offsets which may occur;
-    double huOff, haOff, heOff;
+    public double huOff, haOff, heOff;
     // These are the last times these stats were filled
     DateTime hungerEpoch;
     DateTime happinessEpoch;
@@ -43,6 +44,11 @@ public class Bulb : MonoBehaviour {
 
     // Use this for initialization
     void Start() {
+        if (File.Exists(Application.persistentDataPath + "/pet.blb") == false)
+        {
+            SceneManager.LoadScene(1);
+        }
+
         // Attempts to load the stats when started
         LoadStats();
 
@@ -64,11 +70,23 @@ public class Bulb : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update() {
+    void LateUpdate() {
         StatUpdate();
 
         double[] st = { hunger + huOff, happiness + haOff, health + heOff };
         double avg = (st[0] + st[1] + st[2]) / 3;
+
+        if ((hunger + huOff <= 0 || happiness + haOff <= 0 || health + heOff <= 0) && avg < 33)
+        {
+            BinaryFormatter bf = new BinaryFormatter();
+            FileStream file = File.Create(Application.persistentDataPath + "/end.blb");
+            bf.Serialize(file, DateTime.UtcNow);
+            file.Close();
+
+            SceneManager.LoadScene(2);
+        }
+
+        
         int idxMax = 0;
         for (int i = 0; i < 3; i ++)
         {
@@ -88,6 +106,9 @@ public class Bulb : MonoBehaviour {
         {
             status.text += badStatuses[idxMax];
         }
+
+
+        Debug.Log(DateTime.UtcNow - healthEpoch);
     }
 
     // Called every time the game is paused or unpaused
@@ -122,7 +143,6 @@ public class Bulb : MonoBehaviour {
                 break;
         }
 
-        //Same for happiness
         timeSpan = DateTime.UtcNow - happinessEpoch;
         s = timeSpan.TotalSeconds;
         switch(happinessBehavior)
@@ -138,19 +158,18 @@ public class Bulb : MonoBehaviour {
                 break;
         }
 
-        //Same for hunger
         timeSpan = DateTime.UtcNow - hungerEpoch;
         s = timeSpan.TotalSeconds;
-        switch(healthBehavior)
+        switch(hungerBehavior)
         {
             case 0:
-                health = Linear(s);
+                hunger = Linear(s);
                 break;
             case 1:
-                health = DropOff(s);
+                hunger = DropOff(s);
                 break;
             case 2:
-                health = LevelOut(s);
+                hunger = LevelOut(s);
                 break;
         }
 
@@ -169,17 +188,6 @@ public class Bulb : MonoBehaviour {
         return o;
     }
 
-    public void Feed(double val)
-    {
-        Debug.Log("fed" + Time.time);
-        huOff += val;
-        if (hunger + huOff >= 100)
-        {
-            hunger = 100;
-            huOff = 0;
-            hungerEpoch = DateTime.UtcNow;
-        }
-    }
     public void Feed()
     {
         Debug.Log("fed" + Time.time);
@@ -191,17 +199,6 @@ public class Bulb : MonoBehaviour {
             hungerEpoch = DateTime.UtcNow;
         }
     }
-    public void Play(double val)
-    {
-        Debug.Log("played" + Time.time);
-        haOff += val;
-        if(happiness + haOff >= 100)
-        {
-            happiness = 100;
-            haOff = 0;
-            happinessEpoch = DateTime.UtcNow;
-        }
-    }
     public void Play()
     {
         Debug.Log("played" + Time.time);
@@ -211,17 +208,6 @@ public class Bulb : MonoBehaviour {
             happiness = 100;
             haOff = 0;
             happinessEpoch = DateTime.UtcNow;
-        }
-    }
-    public void Treat(double val)
-    {
-        Debug.Log("treated" + Time.time);
-        heOff += val;
-        if(health + heOff >= 100)
-        {
-            health = 100;
-            heOff = 0;
-            healthEpoch = DateTime.UtcNow;
         }
     }
     public void Treat()
