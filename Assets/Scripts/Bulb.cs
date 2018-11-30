@@ -73,7 +73,10 @@ public class Bulb : MonoBehaviour {
     void LateUpdate() {
         StatUpdate();
 
-        if(hunger + huOff <= 0 || happiness + haOff <= 0 || health + heOff <= 0)
+        double[] st = { hunger + huOff, happiness + haOff, health + heOff };
+        double avg = (st[0] + st[1] + st[2]) / 3;
+
+        if ((hunger + huOff <= 0 || happiness + haOff <= 0 || health + heOff <= 0) && avg < 33)
         {
             BinaryFormatter bf = new BinaryFormatter();
             FileStream file = File.Create(Application.persistentDataPath + "/end.blb");
@@ -83,8 +86,7 @@ public class Bulb : MonoBehaviour {
             SceneManager.LoadScene(2);
         }
 
-        double[] st = { hunger + huOff, happiness + haOff, health + heOff };
-        double avg = (st[0] + st[1] + st[2]) / 3;
+        
         int idxMax = 0;
         for (int i = 0; i < 3; i ++)
         {
