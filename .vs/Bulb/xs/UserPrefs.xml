@@ -1,8 +1,10 @@
 ﻿<Properties StartupConfiguration="{BBA2227D-8394-2CB3-8519-62FA0217A641}|">
   <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="Unity.Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="../Documents/android_sdk/tools/bin/sdkmanager">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Bulb.cs">
     <Files>
-      <File FileName="../Documents/android_sdk/tools/bin/sdkmanager" Line="31" Column="61" />
+      <File FileName="Assets/Scripts/Selection.cs" Line="61" Column="81" />
+      <File FileName="Assets/Scripts/Spawner.cs" Line="16" Column="66" />
+      <File FileName="Assets/Scripts/Bulb.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
