@@ -18,8 +18,8 @@ public class Spawner : MonoBehaviour {
             SceneManager.LoadScene(1);
         }
 
-        s0 = Resources.Load<GameObject>("Bulbs/ONION");
-        s1 = Resources.Load<GameObject>("Bulbs/BEANIE");
+        s0 = Resources.Load<GameObject>("Bulbs/00_ONION");
+        s1 = Resources.Load<GameObject>("Bulbs/01_BEANIE");
 
         BinaryFormatter bf = new BinaryFormatter();
         FileStream file = File.Open(Application.persistentDataPath + "/pet.blb", FileMode.Open);
@@ -29,10 +29,10 @@ public class Spawner : MonoBehaviour {
         switch(sel)
         {
             case 0:
-                Instantiate(s0).name = "ONION";
+                Instantiate(s0, GameObject.Find("BulbSpace").transform).name = "ONION";
                 break;
             case 1:
-                Instantiate(s1).name = "BEANIE";
+                Instantiate(s1, GameObject.Find("BulbSpace").transform).name = "BEANIE";
                 break;
         }
 

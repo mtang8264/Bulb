@@ -1,8 +1,10 @@
 fileFormatVersion: 2
-guid: 2541d7bbcf93e274d94e3d4ea3a540e3
+guid: 6bb9194089139474cb449a96913d5500
 TextureImporter:
   fileIDToRecycleName:
-    21300000: Bkgrnd_0
+    21300000: beef
+    21300002: smile
+    21300004: cross
   externalObjects: {}
   serializedVersion: 7
   mipmaps:
@@ -32,7 +34,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: -1
+    filterMode: 0
     aniso: -1
     mipBias: -100
     wrapU: 1
@@ -43,10 +45,10 @@ TextureImporter:
   compressionQuality: 50
   spriteMode: 2
   spriteExtrude: 1
-  spriteMeshType: 1
+  spriteMeshType: 0
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 160
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -118,21 +120,61 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Bkgrnd_0
+      name: beef
       rect:
         serializedVersion: 2
-        x: 2
-        y: 5894
-        width: 4682
-        height: 3183
+        x: 0
+        y: 0
+        width: 160
+        height: 160
       alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 85, y: 75, z: 75, w: 75}
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 20, y: 10, z: 20, w: 20}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 12aba963bbc244d59abce401f1914a8f
+      spriteID: dc6e2961e04d74a70b2a459a00c5d6a2
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: smile
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 0
+        width: 160
+        height: 160
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 20, y: 20, z: 20, w: 20}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 88a417ac446ef4dd7afd96d700c75079
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cross
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 0
+        width: 160
+        height: 160
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 10, y: 10, z: 10, w: 10}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 06719118454e945338876824144baed4
       vertices: []
       indices: 
       edges: []
@@ -140,7 +182,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: ef7c3ae171808934fb91b166a410b200
+    spriteID: 7d895d015ae154cd2b234556230250b3
     vertices: []
     indices: 
     edges: []

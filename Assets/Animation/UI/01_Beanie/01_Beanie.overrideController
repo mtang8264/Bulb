@@ -1,0 +1,14 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: 01_Beanie
+  m_Controller: {fileID: 9100000, guid: ed560caa20ecc4c8dbcbe50ef9c7c017, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: 5eeb6ffd9fc9b44f4a5faafd26240c60, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 374e87ce999d442d8a8868ecb9115d9b, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 022046a48231d45fdaa0db326bcc9eff, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 56a85583b508c4ad79739bb489a44902, type: 2}

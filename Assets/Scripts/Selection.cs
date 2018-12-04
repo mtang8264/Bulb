@@ -22,8 +22,8 @@ public class Selection : MonoBehaviour {
         animator = GameObject.Find("Ren").GetComponent<Animator>();
         displayName = GameObject.Find("Name").GetComponent<Text>();
 
-        s0 = Resources.Load<GameObject>("Bulbs/Onion");
-        s1 = Resources.Load<GameObject>("Bulbs/Beanie");
+        s0 = Resources.Load<GameObject>("Bulbs/00_Onion");
+        s1 = Resources.Load<GameObject>("Bulbs/01_Beanie");
 	}
 
     // Update is called once per frame
@@ -43,6 +43,8 @@ public class Selection : MonoBehaviour {
                 displayName.text = s1.name;
                 break;
         }
+
+        displayName.text = displayName.text.Substring(3);
     }
 
     public void Next()
