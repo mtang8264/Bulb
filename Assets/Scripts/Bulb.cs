@@ -26,6 +26,8 @@ public class Bulb : MonoBehaviour {
 
     Button feed, play, treat;
 
+    Text[] nums = new Text[3];
+
     string[] goodStatuses = {
         "\nSTUFFED",
         "\nECSTATIC",
@@ -67,6 +69,10 @@ public class Bulb : MonoBehaviour {
         play.onClick.AddListener(Play);
         treat = GameObject.Find("Treat").GetComponent<Button>();
         treat.onClick.AddListener(Treat);
+
+        nums[0] = GameObject.Find("HungerNum").GetComponent<Text>();
+        nums[2] = GameObject.Find("HealthNum").GetComponent<Text>();
+        nums[1] = GameObject.Find("HappinessNum").GetComponent<Text>();
     }
 
     // Update is called once per frame
@@ -107,8 +113,36 @@ public class Bulb : MonoBehaviour {
             status.text += badStatuses[idxMax];
         }
 
+        nums[0].text = "" + Mathf.Round((float)(hunger + huOff)*100) / 100;
+        nums[1].text = "" + Mathf.Round((float)(happiness + haOff)*100) / 100;
+        nums[2].text = "" + Mathf.Round((float)(health + heOff)*100) / 100;
 
-        Debug.Log(DateTime.UtcNow - healthEpoch);
+        foreach(Text t in nums)
+        {
+            switch(t.text.Length)
+            {
+                case 0:
+                    t.text = "00.00";
+                    break;
+                case 1:
+                    t.text = "0" + t.text + ".00";
+                    break;
+                case 2:
+                    t.text += ".00";
+                    break;
+                case 3:
+                    if(t.text == "100")
+                    {
+                        t.text = "100.00";
+                        break;
+                    }
+                    t.text += "00";
+                    break;
+                case 4:
+                    t.text += "0";
+                    break;
+            }
+        }
     }
 
     // Called every time the game is paused or unpaused
