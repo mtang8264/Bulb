@@ -1,0 +1,14 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: 02_Billa
+  m_Controller: {fileID: 9100000, guid: ed560caa20ecc4c8dbcbe50ef9c7c017, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: 5eeb6ffd9fc9b44f4a5faafd26240c60, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: b319ccb526fe9e44ab84d830f9edabb4, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 022046a48231d45fdaa0db326bcc9eff, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 489fc5fd3f6e22341866df7f161bfbef, type: 2}
