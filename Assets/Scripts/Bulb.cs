@@ -9,13 +9,16 @@ using System.IO;
 using UnityEngine.SceneManagement;
 
 public class Bulb : MonoBehaviour {
-    public string az = "0 = Linear, 1 = DropOff, 2 = LevelOut";
-    public int hungerBehavior, happinessBehavior, healthBehavior;
+    int hidden = 0;
+
+    [Header("Stat Behaviors: 0 = Linear, 1 = DropOff, 2 = LevelOut")]
+    public StatMode hungerBehavior;
+    public StatMode happinessBehavior, healthBehavior;
 
     // The stats after they have been processed
-    public double hunger, happiness, health;
+    double hunger, happiness, health;
     // Any offsets which may occur;
-    public double huOff, haOff, heOff;
+    double huOff, haOff, heOff;
     // These are the last times these stats were filled
     DateTime hungerEpoch;
     DateTime happinessEpoch;
@@ -73,6 +76,8 @@ public class Bulb : MonoBehaviour {
         nums[0] = GameObject.Find("HungerNum").GetComponent<Text>();
         nums[2] = GameObject.Find("HealthNum").GetComponent<Text>();
         nums[1] = GameObject.Find("HappinessNum").GetComponent<Text>();
+
+        GetComponent<Button>().onClick.AddListener(RestartCount);
     }
 
     // Update is called once per frame
@@ -166,13 +171,13 @@ public class Bulb : MonoBehaviour {
         double s = timeSpan.TotalSeconds;
         switch (healthBehavior)
         {
-            case 0:
+            case StatMode.LINEAR:
                 health = Linear(s);
                 break;
-            case 1:
+            case StatMode.FALLOFF:
                 health = DropOff(s);
                 break;
-            case 2:
+            case StatMode.LEVELOFF:
                 health = LevelOut(s);
                 break;
         }
@@ -181,13 +186,13 @@ public class Bulb : MonoBehaviour {
         s = timeSpan.TotalSeconds;
         switch(happinessBehavior)
         {
-            case 0:
+            case StatMode.LINEAR:
                 happiness = Linear(s);
                 break;
-            case 1:
+            case StatMode.FALLOFF:
                 happiness = DropOff(s);
                 break;
-            case 2:
+            case StatMode.LEVELOFF:
                 happiness = LevelOut(s);
                 break;
         }
@@ -196,13 +201,13 @@ public class Bulb : MonoBehaviour {
         s = timeSpan.TotalSeconds;
         switch(hungerBehavior)
         {
-            case 0:
+            case StatMode.LINEAR:
                 hunger = Linear(s);
                 break;
-            case 1:
+            case StatMode.FALLOFF:
                 hunger = DropOff(s);
                 break;
-            case 2:
+            case StatMode.LEVELOFF:
                 hunger = LevelOut(s);
                 break;
         }
@@ -324,6 +329,18 @@ public class Bulb : MonoBehaviour {
         hungerEpoch = s.ep1;
         happinessEpoch = s.ep2;
         healthEpoch = s.ep3;
+    }
+
+    public enum StatMode { LINEAR, FALLOFF, LEVELOFF};
+    
+    public void RestartCount()
+    {
+        Debug.Log(hidden);
+        hidden++;
+        if(hidden > 14)
+        {
+            SceneManager.LoadScene("restart");
+        }
     }
 }
 
