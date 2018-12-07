@@ -34,8 +34,8 @@ public class EndScreen : MonoBehaviour {
         TimeSpan span = eTime - sTime;
 
         GetComponent<Text>().text += span.Days + " Days,\n" +
-            (span.Hours - span.Days * 24) + " Hours,\n" +
-            (span.Minutes - (span.Hours - span.Days * 24) * 60) + " Minutes, and\n" +
-            (span.Seconds - (span.Minutes - (span.Hours - span.Days * 24) * 60) * 60) + " Seconds";
+            span.Hours + " Hours,\n" +
+            span.Minutes + " Minutes, and\n" +
+            span.Seconds + " Seconds";
 	}
 }
