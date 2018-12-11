@@ -62,8 +62,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hungerBehavior: 0
-  happinessBehavior: 1
-  healthBehavior: 2
+  happinessBehavior: 3
+  healthBehavior: 4
 --- !u!114 &114648233961391626
 MonoBehaviour:
   m_ObjectHideFlags: 1

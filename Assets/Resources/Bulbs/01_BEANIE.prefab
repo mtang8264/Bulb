@@ -74,7 +74,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 926659ecd184b504da89ce4ebfa1526a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hungerBehavior: 1
+  hungerBehavior: 4
   happinessBehavior: 2
   healthBehavior: 0
 --- !u!114 &114473189758656132

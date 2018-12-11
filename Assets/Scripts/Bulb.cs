@@ -11,7 +11,7 @@ using UnityEngine.SceneManagement;
 public class Bulb : MonoBehaviour {
     int hidden = 0;
 
-    [Header("Stat Behaviors: 0 = Linear, 1 = DropOff, 2 = LevelOut")]
+    [Header("Stat Behaviors")]
     public StatMode hungerBehavior;
     public StatMode happinessBehavior, healthBehavior;
 
@@ -180,6 +180,12 @@ public class Bulb : MonoBehaviour {
             case StatMode.LEVELOFF:
                 health = LevelOut(s);
                 break;
+            case StatMode.SLOW:
+                health = Slow(s);
+                break;
+            case StatMode.FAST:
+                health = Fast(s);
+                break;
         }
 
         timeSpan = DateTime.UtcNow - happinessEpoch;
@@ -195,6 +201,12 @@ public class Bulb : MonoBehaviour {
             case StatMode.LEVELOFF:
                 happiness = LevelOut(s);
                 break;
+            case StatMode.SLOW:
+                happiness = Slow(s);
+                break;
+            case StatMode.FAST:
+                happiness = Fast(s);
+                break;
         }
 
         timeSpan = DateTime.UtcNow - hungerEpoch;
@@ -209,6 +221,12 @@ public class Bulb : MonoBehaviour {
                 break;
             case StatMode.LEVELOFF:
                 hunger = LevelOut(s);
+                break;
+            case StatMode.SLOW:
+                hunger = Slow(s);
+                break;
+            case StatMode.FAST:
+                hunger = Fast(s);
                 break;
         }
 
@@ -263,7 +281,7 @@ public class Bulb : MonoBehaviour {
 
     double Linear(double s)
     {
-        return -1 * (s / 720) + 100;
+        return -1 * (s / 792) + 100;
     }
     double LevelOut(double s)
     {
@@ -272,6 +290,14 @@ public class Bulb : MonoBehaviour {
     double DropOff(double s)
     {
         return -1 * (100 * Mathf.Pow((float)s, 2) / Mathf.Pow(79200, 2)) + 100;
+    }
+    double Fast(double s)
+    {
+        return -1 * (s / 720) + 100;
+    }
+    double Slow(double s)
+    {
+        return -1 * (s / 864) + 100;
     }
 
     // Save load stuff
@@ -331,7 +357,7 @@ public class Bulb : MonoBehaviour {
         healthEpoch = s.ep3;
     }
 
-    public enum StatMode { LINEAR, FALLOFF, LEVELOFF};
+    public enum StatMode { LINEAR, FALLOFF, LEVELOFF, FAST, SLOW};
     
     public void RestartCount()
     {
