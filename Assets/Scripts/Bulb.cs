@@ -9,6 +9,7 @@ using System.IO;
 using UnityEngine.SceneManagement;
 
 public class Bulb : MonoBehaviour {
+    double avg;
     int hidden = 0;
 
     [Header("Stat Behaviors")]
@@ -78,6 +79,12 @@ public class Bulb : MonoBehaviour {
         nums[1] = GameObject.Find("HappinessNum").GetComponent<Text>();
 
         GetComponent<Button>().onClick.AddListener(RestartCount);
+
+        if(FeedCarrier.feedValue != -1)
+        {
+            Feed(FeedCarrier.feedValue);
+            FeedCarrier.feedValue = -1;
+        }
     }
 
     // Update is called once per frame
@@ -85,7 +92,7 @@ public class Bulb : MonoBehaviour {
         StatUpdate();
 
         double[] st = { hunger + huOff, happiness + haOff, health + heOff };
-        double avg = (st[0] + st[1] + st[2]) / 3;
+        avg = (st[0] + st[1] + st[2]) / 3;
 
         if ((hunger + huOff <= 0 || happiness + haOff <= 0 || health + heOff <= 0) && avg < 33)
         {
@@ -247,14 +254,20 @@ public class Bulb : MonoBehaviour {
 
     public void Feed()
     {
-        Debug.Log("fed" + Time.time);
-        huOff += 10;
-        if (hunger + huOff >= 100)
+        if(avg > 66)
         {
-            hunger = 100;
-            huOff = 0;
-            hungerEpoch = DateTime.UtcNow;
+            FeedCarrier.difficulty = 2;
         }
+        else if(avg > 33)
+        {
+            FeedCarrier.difficulty = 1;
+        }
+        else
+        {
+            FeedCarrier.difficulty = 0;
+        }
+        Instantiate(Resources.Load("FeedCarrier"));
+        SceneManager.LoadScene(4);
     }
     public void Play()
     {
@@ -271,6 +284,39 @@ public class Bulb : MonoBehaviour {
     {
         Debug.Log("treated" + Time.time);
         heOff += 10;
+        if (health + heOff >= 100)
+        {
+            health = 100;
+            heOff = 0;
+            healthEpoch = DateTime.UtcNow;
+        }
+    }
+    public void Feed(double o)
+    {
+        Debug.Log("fed" + Time.time);
+        huOff += o;
+        if (hunger + huOff >= 100)
+        {
+            hunger = 100;
+            huOff = 0;
+            hungerEpoch = DateTime.UtcNow;
+        }
+    }
+    public void Play(double o)
+    {
+        Debug.Log("played" + Time.time);
+        haOff += 0;
+        if (happiness + haOff >= 100)
+        {
+            happiness = 100;
+            haOff = 0;
+            happinessEpoch = DateTime.UtcNow;
+        }
+    }
+    public void Treat(double o)
+    {
+        Debug.Log("treated" + Time.time);
+        heOff += o;
         if (health + heOff >= 100)
         {
             health = 100;

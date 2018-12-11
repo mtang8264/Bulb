@@ -6,8 +6,8 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Desktop.unity
-    guid: 52d47993d0831476c95f6a24d8d4ce69
+    path: Assets/Scenes/Mobile.unity
+    guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
     path: Assets/Scenes/Selection.unity
     guid: 4e1f869b9de2148e49f455f5982c60e9
@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/restart.unity
     guid: e469730ba36ff4c9aa4883b9ffd6f7f8
+  - enabled: 1
+    path: Assets/Scenes/MiniGames/Feed.unity
+    guid: 03bad64a8c66d4a8d8f8c3d50505f9d6
   m_configObjects: {}
