@@ -16,6 +16,8 @@ public class FeedGameRunner : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+        score = 0;
+
         scoreText = GameObject.Find("Score").GetComponent<Text>();
 
         switch(FeedCarrier.difficulty)
