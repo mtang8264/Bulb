@@ -50,6 +50,7 @@ public class Bulb : MonoBehaviour {
 
     // Use this for initialization
     void Start() {
+        //Checks if the player has a save file
         if (File.Exists(Application.persistentDataPath + "/pet.blb") == false)
         {
             SceneManager.LoadScene(1);
@@ -65,8 +66,9 @@ public class Bulb : MonoBehaviour {
         // Sets the max values just in case
         hungerSlider.maxValue = happinessSlider.maxValue = healthSlider.maxValue = 100;
 
+        // Finds the game objects
         status = GameObject.Find("Status").GetComponent<Text>();
-
+        // Buttons and listeners
         feed = GameObject.Find("Feed").GetComponent<Button>();
         feed.onClick.AddListener(Feed);
         play = GameObject.Find("Play").GetComponent<Button>();
@@ -84,6 +86,12 @@ public class Bulb : MonoBehaviour {
         {
             Feed(FeedCarrier.feedValue);
             FeedCarrier.feedValue = -1;
+        }
+        if(PlayGameRunner.points[0] != 0)
+        {
+            Play(PlayGameRunner.points[0] * 5);
+            PlayGameRunner.points[0] = 0;
+            PlayGameRunner.points[1] = 0;
         }
     }
 
@@ -267,18 +275,13 @@ public class Bulb : MonoBehaviour {
             FeedCarrier.difficulty = 0;
         }
         Instantiate(Resources.Load("FeedCarrier"));
+        SaveStats();
         SceneManager.LoadScene(4);
     }
     public void Play()
     {
-        Debug.Log("played" + Time.time);
-        haOff += 10;
-        if (happiness + haOff >= 100)
-        {
-            happiness = 100;
-            haOff = 0;
-            happinessEpoch = DateTime.UtcNow;
-        }
+        SaveStats();
+        SceneManager.LoadScene(5);
     }
     public void Treat()
     {
