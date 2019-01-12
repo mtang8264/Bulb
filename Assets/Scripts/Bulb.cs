@@ -93,6 +93,11 @@ public class Bulb : MonoBehaviour {
             PlayGameRunner.points[0] = 0;
             PlayGameRunner.points[1] = 0;
         }
+        if(TreatRunner.value != 0)
+        {
+            Treat(TreatRunner.value);
+            TreatRunner.value = 0;
+        }
     }
 
     // Update is called once per frame
@@ -285,14 +290,8 @@ public class Bulb : MonoBehaviour {
     }
     public void Treat()
     {
-        Debug.Log("treated" + Time.time);
-        heOff += 10;
-        if (health + heOff >= 100)
-        {
-            health = 100;
-            heOff = 0;
-            healthEpoch = DateTime.UtcNow;
-        }
+        SaveStats();
+        SceneManager.LoadScene(6);
     }
     public void Feed(double o)
     {
